@@ -1,5 +1,6 @@
 # Claude Code working files
 CLAUDE.md
+.claude/
 
 # Environment / secrets
 .env
