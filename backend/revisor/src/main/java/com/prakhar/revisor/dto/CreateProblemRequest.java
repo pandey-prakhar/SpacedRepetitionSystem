@@ -16,6 +16,8 @@ public record CreateProblemRequest(
         @Size(max = 100, message = "Pattern must not exceed 100 characters")
         String pattern,
 
+        String description,
+        String sampleTestCase,
         String notes,
         String solutionCode,
         DifficultyTag difficultyTag

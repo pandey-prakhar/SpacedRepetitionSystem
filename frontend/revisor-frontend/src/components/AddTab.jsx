@@ -6,6 +6,8 @@ const EMPTY = {
   url: "",
   pattern: "",
   difficultyTag: "MEDIUM",
+  description: "",
+  sampleTestCase: "",
   notes: "",
   solutionCode: "",
 };
@@ -27,6 +29,8 @@ function AddTab({ onCreated }) {
         url: form.url.trim() || null,
         pattern: form.pattern.trim() || null,
         difficultyTag: form.difficultyTag,
+        description: form.description.trim() || null,
+        sampleTestCase: form.sampleTestCase.trim() || null,
         notes: form.notes.trim() || null,
         solutionCode: form.solutionCode.trim() || null,
       };
@@ -93,7 +97,35 @@ function AddTab({ onCreated }) {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Notes</label>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Description <span className="text-gray-400 font-normal">(short, shown on review card)</span>
+        </label>
+        <textarea
+          value={form.description}
+          onChange={setField("description")}
+          rows={4}
+          className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Given an array of integers, return indices of the two numbers that add up to a target…"
+        />
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Sample test case <span className="text-gray-400 font-normal">(shown on review card)</span>
+        </label>
+        <textarea
+          value={form.sampleTestCase}
+          onChange={setField("sampleTestCase")}
+          rows={3}
+          className="w-full border rounded px-3 py-2 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder={"Input: nums = [2,7,11,15], target = 9\nOutput: [0,1]"}
+        />
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Notes <span className="text-gray-400 font-normal">(hidden behind reveal)</span>
+        </label>
         <textarea
           value={form.notes}
           onChange={setField("notes")}
@@ -104,7 +136,9 @@ function AddTab({ onCreated }) {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Solution code</label>
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          Solution code <span className="text-gray-400 font-normal">(hidden behind reveal)</span>
+        </label>
         <textarea
           value={form.solutionCode}
           onChange={setField("solutionCode")}

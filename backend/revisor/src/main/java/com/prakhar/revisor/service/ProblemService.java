@@ -38,6 +38,8 @@ public class ProblemService {
                 .title(request.title())
                 .url(request.url())
                 .pattern(request.pattern())
+                .description(request.description())
+                .sampleTestCase(request.sampleTestCase())
                 .notes(request.notes())
                 .solutionCode(request.solutionCode())
                 .difficultyTag(request.difficultyTag())
@@ -70,9 +72,11 @@ public class ProblemService {
         Problem problem = getProblemById(id);
         if (request.title() != null)        problem.setTitle(request.title());
         if (request.url() != null)          problem.setUrl(request.url());
-        if (request.pattern() != null)      problem.setPattern(request.pattern());
-        if (request.notes() != null)        problem.setNotes(request.notes());
-        if (request.solutionCode() != null) problem.setSolutionCode(request.solutionCode());
+        if (request.pattern() != null)        problem.setPattern(request.pattern());
+        if (request.description() != null)    problem.setDescription(request.description());
+        if (request.sampleTestCase() != null) problem.setSampleTestCase(request.sampleTestCase());
+        if (request.notes() != null)          problem.setNotes(request.notes());
+        if (request.solutionCode() != null)   problem.setSolutionCode(request.solutionCode());
         if (request.difficultyTag() != null) problem.setDifficultyTag(request.difficultyTag());
         return problemRepository.save(problem);
     }

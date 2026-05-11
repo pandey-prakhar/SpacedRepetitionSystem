@@ -14,6 +14,8 @@ public record UpdateProblemRequest(
         @Size(max = 100)
         String pattern,
 
+        String description,
+        String sampleTestCase,
         String notes,
         String solutionCode,
         DifficultyTag difficultyTag

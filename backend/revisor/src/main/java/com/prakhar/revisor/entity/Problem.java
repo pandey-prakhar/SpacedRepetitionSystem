@@ -34,6 +34,12 @@ public class Problem {
     private String pattern;
 
     @Column(columnDefinition = "TEXT")
+    private String description;
+
+    @Column(name = "sample_test_case", columnDefinition = "TEXT")
+    private String sampleTestCase;
+
+    @Column(columnDefinition = "TEXT")
     private String notes;
 
     @Column(name = "solution_code", columnDefinition = "TEXT")
