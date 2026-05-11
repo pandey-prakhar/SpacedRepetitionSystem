@@ -165,9 +165,9 @@ Test profile (`src/test/resources/application.properties`) overrides this to use
 ## Roadmap
 
 Toward a public deploy:
-- [ ] Auth (GitHub + Google OAuth — covers devs and non-devs without storing passwords)
+- [ ] Auth via OAuth (GitHub + Google) — no passwords stored
 - [ ] Postgres + Flyway migrations to replace local H2
-- [ ] Per-user limits: 500 problems/user, sensible length caps on text fields
+- [ ] Per-user limits: 300 problems/user; notes ≤ 5,000 chars; solution ≤ 10,000 chars; reasonable caps on shorter fields
 - [ ] Rate limiting on `/api/**`
 - [ ] Production CORS and HTTPS
 - [ ] Deploy backend (Render) + frontend (Vercel) + custom domain
