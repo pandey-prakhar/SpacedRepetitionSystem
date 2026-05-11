@@ -16,3 +16,9 @@ Thumbs.db
 .idea/
 *.iml
 .vscode/
+
+# Local H2 database files (persist user data — never commit)
+backend/revisor/data/
+*.mv.db
+*.trace.db
+*.lock.db
