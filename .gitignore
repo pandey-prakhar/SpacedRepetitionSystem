@@ -1,6 +1,7 @@
 # Claude Code working files
 CLAUDE.md
 .claude/
+FRONTEND_NOTES.md
 
 # Environment / secrets
 .env
@@ -10,3 +11,8 @@ CLAUDE.md
 # OS
 .DS_Store
 Thumbs.db
+
+# IDE
+.idea/
+*.iml
+.vscode/
