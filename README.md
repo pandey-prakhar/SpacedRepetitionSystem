@@ -21,17 +21,19 @@ Also a hands-on learning project for Spring Boot, JPA/Hibernate, REST API design
 | Layer | Tech |
 |---|---|
 | Backend | Spring Boot 3.5, Java 21, Maven |
-| Persistence | JPA / Hibernate, H2 (in-memory, dev) |
+| Persistence | JPA / Hibernate, H2 (file-based for dev, in-memory for tests) |
 | Frontend | Vite, React 19, Tailwind CSS 3 |
 
 ## Features
 
-- Add coding problems with title, URL, difficulty, pattern, a **short description**, a **sample test case**, plus deeper notes and full solution code.
-- See **Today's reviews** — problems whose next-review date is today or earlier. Description and sample test case are shown up front so you can attempt the problem without leaving the app.
-- **Hide-then-reveal** notes and solution — the SRS pattern: try first, peek only if needed.
-- Rate each review (**Again / Hard / Good / Easy**); SM-2 schedules the next review automatically.
-- Browse all problems with their current SM-2 state (interval, ease factor, repetitions).
-- Delete problems.
+- **Add** coding problems with title, URL, difficulty, pattern, a short description, a sample test case, plus deeper notes and full solution code.
+- **Today's reviews** — problems whose next-review date is today or earlier. Description and sample test case are shown up front so you can attempt the problem without leaving the app.
+- **Hide-then-reveal** notes and solution on the Today tab — the SRS pattern: try first, peek only if needed.
+- **Rate** each review (Again / Hard / Good / Easy); SM-2 schedules the next review automatically without resetting your work.
+- **All Problems** view with expandable rows: collapsed for fast scanning, click to unfold the full description / test case / notes / solution for free-form revision any time.
+- **Inline edit** on any problem (title, URL, pattern, difficulty, description, test case, notes, solution code). SM-2 schedule is preserved across edits.
+- **Delete** problems with a confirmation prompt.
+- **Persistent storage** — dev data lives in a local H2 file and survives restarts.
 
 ## Architecture
 
@@ -52,8 +54,8 @@ SpacedRepetitionSystem/
         ├── api.js                    Centralised fetch wrappers
         ├── App.jsx                   Tab shell
         └── components/
-            ├── TodayTab.jsx          Due problems + review buttons
-            ├── AllTab.jsx            All problems + delete
+            ├── TodayTab.jsx          Due problems + review buttons + reveal
+            ├── AllTab.jsx            All problems + expandable details + inline edit + delete
             └── AddTab.jsx            Create form
 ```
 
@@ -100,7 +102,8 @@ cd backend/revisor
 ./mvnw spring-boot:run
 ```
 - API: http://localhost:8080
-- H2 console: http://localhost:8080/h2-console — JDBC URL `jdbc:h2:mem:revisordb`, user `sa`, no password.
+- H2 console: http://localhost:8080/h2-console — JDBC URL `jdbc:h2:file:./data/revisordb`, user `sa`, no password.
+- Data file: `data/revisordb.mv.db` is created (relative to the working directory you launched the app from) and persists across restarts. Gitignored.
 
 ### Frontend
 ```bash
@@ -132,26 +135,30 @@ curl http://localhost:8080/api/problems/due
 cd backend/revisor
 ./mvnw test
 ```
-Covers `Sm2Service` (algorithm) and `ProblemController` (full Spring context + H2 integration).
+Covers `Sm2Service` (algorithm) and `ProblemController` (full Spring context + H2 integration). Tests use a separate in-memory H2 (`src/test/resources/application.properties`) so they never touch the dev data file.
 
 ## Configuration
 
 Dev profile in `application.properties`:
 ```properties
-spring.datasource.url=jdbc:h2:mem:revisordb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+spring.datasource.url=jdbc:h2:file:./data/revisordb;AUTO_SERVER=TRUE
 spring.h2.console.enabled=true
-spring.jpa.hibernate.ddl-auto=create-drop
+spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
 ```
-Schema is dropped and recreated on each restart in dev. Production would replace `create-drop` with Flyway-managed migrations.
+- `file:./data/revisordb` — data persists in a local file across restarts.
+- `AUTO_SERVER=TRUE` — lets the H2 web console attach to the same file the app is using.
+- `ddl-auto=update` — Hibernate keeps the schema across restarts and adds new columns when entities change. For renames / destructive migrations, Flyway is on the roadmap.
+
+Test profile (`src/test/resources/application.properties`) overrides this to use an in-memory H2 with `create-drop`, so the test suite is fast and isolated.
 
 ## Roadmap
 
 - [ ] GitHub OAuth login (schema is already multi-user; `default@revisor.dev` is just a seeded placeholder)
-- [ ] Flyway migrations to replace `create-drop`
+- [ ] Flyway migrations to replace Hibernate `update`
 - [ ] `ProblemResponse` DTO instead of returning entities directly
-- [ ] Edit-problem UI
-- [ ] Tags / patterns view, search and filtering
+- [ ] Search / filter on All Problems
+- [ ] Keyboard shortcuts for review (1/2/3/4 → Again/Hard/Good/Easy)
 - [ ] Persistent DB (Postgres) and deployment
 
 ## Status
