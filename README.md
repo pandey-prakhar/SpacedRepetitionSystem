@@ -1,10 +1,20 @@
-# Revisor — Spaced Repetition for Coding Problems
+# Revisor — Spaced Repetition for DSA Problems
 
 A plain, no-fuss web app for revisiting coding problems (LeetCode-style) on a spaced-repetition schedule using the SM-2 algorithm.
 
-Most "review" tools for coding problems are either overkill (full LMS systems), abandoned, or buried inside paid platforms. Revisor is small, local, fast, and built to actually be used every day — open it, see what's due, attempt the problem, peek at your notes/solution only if you got stuck, and rate yourself.
+## Why I built this
 
-Also a hands-on learning project for Spring Boot, JPA/Hibernate, REST API design, and modern React.
+I'm a developer, and like most devs prepping for interviews I keep coming back to DSA problems — on LeetCode, Codeforces, NeetCode, wherever. The pattern is always the same: solve a problem, feel clever, forget it three weeks later, re-solve it from scratch when a variant shows up. Keeping DSA fresh is a slow, ongoing thing — at this stage of my career it's something I need to *keep an eye on*, not cram once.
+
+There are plenty of good general-purpose spaced repetition tools out there — Anki, RemNote, full study apps. They work, and they're built for everything: medical school flashcards, language vocab, history trivia. Bending them around "I want to revisit Two Sum in 5 days, with my notes and my solution code right there" felt like fighting the tool. None of them speak the language of coding problems out of the box.
+
+Revisor is the focused thing I wanted: small, fast, opinionated about DSA specifically. Add a problem with its description, a sample test case, your notes, your solution. When it's due, attempt it again, reveal your notes only if you got stuck, rate yourself honestly. SM-2 picks when to show it next. That's the whole app — no decks, no folders, no LMS, no AI tutor.
+
+If you've ever solved Two Sum, felt great, and bombed Three Sum a month later, this is for you.
+
+## Stack and project type
+
+Hands-on learning project for Spring Boot, JPA/Hibernate, REST API design, and modern React — alongside being a tool I actually intend to use.
 
 ## Screenshots
 
@@ -154,13 +164,20 @@ Test profile (`src/test/resources/application.properties`) overrides this to use
 
 ## Roadmap
 
-- [ ] GitHub OAuth login (schema is already multi-user; `default@revisor.dev` is just a seeded placeholder)
-- [ ] Flyway migrations to replace Hibernate `update`
-- [ ] `ProblemResponse` DTO instead of returning entities directly
+Toward a public deploy:
+- [ ] Auth (GitHub + Google OAuth — covers devs and non-devs without storing passwords)
+- [ ] Postgres + Flyway migrations to replace local H2
+- [ ] Per-user limits: 500 problems/user, sensible length caps on text fields
+- [ ] Rate limiting on `/api/**`
+- [ ] Production CORS and HTTPS
+- [ ] Deploy backend (Render) + frontend (Vercel) + custom domain
+
+Quality-of-life:
 - [ ] Search / filter on All Problems
 - [ ] Keyboard shortcuts for review (1/2/3/4 → Again/Hard/Good/Easy)
-- [ ] Persistent DB (Postgres) and deployment
+- [ ] `ProblemResponse` DTO instead of returning entities directly
+- [ ] Seed content (e.g., NeetCode 150) so new users have something to review on day 1
 
 ## Status
 
-Backend MVP and frontend MVP complete and usable end-to-end on `localhost`. No auth yet — single seeded user. Currently in a "use it for a few days and see what hurts" phase before adding more features.
+Backend and frontend MVP complete and usable end-to-end on `localhost`. CRUD + SM-2 review flow working, with persistent local H2 storage, expandable browsing of the full problem set, and inline edit. No auth yet — single seeded user. Currently in a "use it for a few days and see what hurts" phase before layering on OAuth, Postgres, and a public deploy.
