@@ -1,6 +1,20 @@
-# Revisor — Spaced Repetition System for Coding Problems
+# Revisor — Spaced Repetition for Coding Problems
 
-A web app for revisiting coding problems (LeetCode-style) on a spaced-repetition schedule using the SM-2 algorithm. Built as a hands-on project to deeply explore Spring Boot, JPA/Hibernate, REST API design, and modern React.
+A plain, no-fuss web app for revisiting coding problems (LeetCode-style) on a spaced-repetition schedule using the SM-2 algorithm.
+
+Most "review" tools for coding problems are either overkill (full LMS systems), abandoned, or buried inside paid platforms. Revisor is small, local, fast, and built to actually be used every day — open it, see what's due, attempt the problem, peek at your notes/solution only if you got stuck, and rate yourself.
+
+Also a hands-on learning project for Spring Boot, JPA/Hibernate, REST API design, and modern React.
+
+## Screenshots
+
+> _(coming soon — placeholder)_
+
+<!-- Drop screenshots into a `docs/screenshots/` folder and reference them here, e.g.:
+![Today tab](docs/screenshots/today.png)
+![Add problem](docs/screenshots/add.png)
+-->
+
 
 ## Stack
 
@@ -12,9 +26,10 @@ A web app for revisiting coding problems (LeetCode-style) on a spaced-repetition
 
 ## Features
 
-- Add coding problems with title, URL, difficulty, pattern, notes, and solution code.
-- See **Today's reviews** — problems whose next-review date is today or earlier.
-- Rate each review (**Again / Hard / Good / Easy**); SM-2 schedules the next review.
+- Add coding problems with title, URL, difficulty, pattern, a **short description**, a **sample test case**, plus deeper notes and full solution code.
+- See **Today's reviews** — problems whose next-review date is today or earlier. Description and sample test case are shown up front so you can attempt the problem without leaving the app.
+- **Hide-then-reveal** notes and solution — the SRS pattern: try first, peek only if needed.
+- Rate each review (**Again / Hard / Good / Easy**); SM-2 schedules the next review automatically.
 - Browse all problems with their current SM-2 state (interval, ease factor, repetitions).
 - Delete problems.
 
@@ -132,9 +147,13 @@ Schema is dropped and recreated on each restart in dev. Production would replace
 
 ## Roadmap
 
-- [ ] Spring Security + JWT authentication (schema is already multi-user)
+- [ ] GitHub OAuth login (schema is already multi-user; `default@revisor.dev` is just a seeded placeholder)
 - [ ] Flyway migrations to replace `create-drop`
 - [ ] `ProblemResponse` DTO instead of returning entities directly
 - [ ] Edit-problem UI
 - [ ] Tags / patterns view, search and filtering
 - [ ] Persistent DB (Postgres) and deployment
+
+## Status
+
+Backend MVP and frontend MVP complete and usable end-to-end on `localhost`. No auth yet — single seeded user. Currently in a "use it for a few days and see what hurts" phase before adding more features.
