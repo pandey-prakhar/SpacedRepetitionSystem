@@ -44,62 +44,62 @@ function TodayTab({ refreshKey, onChange }) {
     }
   };
 
-  if (loading) return <p className="text-gray-500">Loading…</p>;
-  if (error) return <p className="text-red-600">Error: {error}</p>;
+  if (loading) return <p className="text-gray-500 dark:text-gray-400">Loading…</p>;
+  if (error) return <p className="text-red-600 dark:text-red-400">Error: {error}</p>;
   if (problems.length === 0)
     return (
-      <div className="bg-white rounded-lg p-8 text-center border">
-        <p className="text-gray-700 font-medium">Nothing due today</p>
-        <p className="text-sm text-gray-500 mt-1">Add problems or come back tomorrow.</p>
+      <div className="bg-white dark:bg-gray-800 rounded-lg p-8 text-center border border-gray-200 dark:border-gray-700">
+        <p className="text-gray-700 dark:text-gray-200 font-medium">Nothing due today</p>
+        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Add problems or come back tomorrow.</p>
       </div>
     );
 
   return (
     <div className="space-y-4">
-      <h2 className="text-lg font-semibold text-gray-900">
+      <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
         {problems.length} problem{problems.length === 1 ? "" : "s"} due
       </h2>
       {problems.map((p) => {
         const isRevealed = revealed.has(p.id);
         const hasContent = p.notes || p.solutionCode;
         return (
-          <div key={p.id} className="bg-white rounded-lg p-4 border space-y-3">
+          <div key={p.id} className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700 space-y-3">
             <div className="flex items-start justify-between">
               <div>
-                <h3 className="font-semibold text-gray-900">{p.title}</h3>
+                <h3 className="font-semibold text-gray-900 dark:text-gray-100">{p.title}</h3>
                 {p.url && (
                   <a
                     href={p.url}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-sm text-blue-600 hover:underline"
+                    className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
                   >
                     Open problem ↗
                   </a>
                 )}
               </div>
               {p.difficultyTag && (
-                <span className="text-xs px-2 py-1 rounded bg-gray-100 text-gray-700">
+                <span className="text-xs px-2 py-1 rounded bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200">
                   {p.difficultyTag}
                 </span>
               )}
             </div>
 
-            <div className="text-xs text-gray-500">
+            <div className="text-xs text-gray-500 dark:text-gray-400">
               reps {p.repetitions} · interval {p.intervalDays}d · ef {p.easeFactor.toFixed(2)}
             </div>
 
             {p.description && (
               <div>
-                <p className="text-xs font-semibold text-gray-500 uppercase mb-1">Description</p>
-                <p className="text-sm text-gray-800 whitespace-pre-wrap">{p.description}</p>
+                <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase mb-1">Description</p>
+                <p className="text-sm text-gray-800 dark:text-gray-200 whitespace-pre-wrap">{p.description}</p>
               </div>
             )}
 
             {p.sampleTestCase && (
               <div>
-                <p className="text-xs font-semibold text-gray-500 uppercase mb-1">Sample test case</p>
-                <pre className="text-xs bg-gray-100 text-gray-800 p-3 rounded overflow-x-auto whitespace-pre font-mono">
+                <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase mb-1">Sample test case</p>
+                <pre className="text-xs bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 p-3 rounded overflow-x-auto whitespace-pre font-mono">
                   {p.sampleTestCase}
                 </pre>
               </div>
@@ -109,7 +109,7 @@ function TodayTab({ refreshKey, onChange }) {
               <div>
                 <button
                   onClick={() => toggleReveal(p.id)}
-                  className="text-sm text-blue-600 hover:underline font-medium"
+                  className="text-sm text-blue-600 dark:text-blue-400 hover:underline font-medium"
                 >
                   {isRevealed ? "Hide notes & solution" : "Show notes & solution"}
                 </button>
@@ -118,13 +118,13 @@ function TodayTab({ refreshKey, onChange }) {
                   <div className="mt-3 space-y-3">
                     {p.notes && (
                       <div>
-                        <p className="text-xs font-semibold text-gray-500 uppercase mb-1">Notes</p>
-                        <p className="text-sm text-gray-800 whitespace-pre-wrap">{p.notes}</p>
+                        <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase mb-1">Notes</p>
+                        <p className="text-sm text-gray-800 dark:text-gray-200 whitespace-pre-wrap">{p.notes}</p>
                       </div>
                     )}
                     {p.solutionCode && (
                       <div>
-                        <p className="text-xs font-semibold text-gray-500 uppercase mb-1">
+                        <p className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase mb-1">
                           Solution
                         </p>
                         <pre className="text-xs bg-gray-900 text-gray-100 p-3 rounded overflow-x-auto whitespace-pre">
@@ -136,7 +136,7 @@ function TodayTab({ refreshKey, onChange }) {
                 )}
               </div>
             ) : (
-              <p className="text-xs text-gray-400 italic">No notes or solution saved.</p>
+              <p className="text-xs text-gray-400 dark:text-gray-500 italic">No notes or solution saved.</p>
             )}
 
             <div className="flex gap-2 pt-2">
